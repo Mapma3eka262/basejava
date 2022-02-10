@@ -55,6 +55,7 @@ public class ArrayStorage {
                 return storage[i];
             }
         }
+        System.out.println("Резюме с таким именем не существует");
         return null;
     }
 
@@ -65,7 +66,7 @@ public class ArrayStorage {
                 storage[i] = storage[numberOfResume - 1];
                 numberOfResume--;
                 break;
-            }
+            } else System.out.println("Резюме с таким именем не существует");
         }
     }
 
