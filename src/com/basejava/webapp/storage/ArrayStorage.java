@@ -19,7 +19,7 @@ public class ArrayStorage {
     public void save(Resume r) {
         if (r.getUuid() == null) {
             System.out.println("Введите uuid");
-        } else if (!checkUuid(r)) System.out.println("Резюме с таким uuid создано");
+        } else if (checkUuid(r)) System.out.println("Резюме с таким uuid создано");
         else {
             storage[numberOfResume] = r;
             numberOfResume++;
@@ -29,7 +29,7 @@ public class ArrayStorage {
     public void update(Resume r) {
         if (r.getUuid() == null) {
             System.out.println("Резюме с таким uuid не создано");
-        } else if (!checkUuid(r)) System.out.println("Резюме обновлено");
+        } else if (checkUuid(r)) System.out.println("Резюме обновлено");
         else {
             storage[numberOfResume] = r;
             numberOfResume++;
@@ -40,11 +40,11 @@ public class ArrayStorage {
         int compare = 0;
         while (compare < numberOfResume) {
             if (storage[compare].getUuid().equals(r.getUuid())) {
-                return false;
+                return true;
             }
             compare++;
         }
-        return true;
+        return false;
     }
 
     public Resume get(String uuid) {
