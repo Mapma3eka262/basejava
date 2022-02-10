@@ -1,19 +1,22 @@
+package com.basejava.webapp.storage;
+
 import java.util.Arrays;
+import com.basejava.webapp.model.Resume;
 
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10000];
     private int numberOfResume = 0;
 
-    void clear() {
+    public void clear() {
         Arrays.fill(storage,0,numberOfResume,null);
         numberOfResume = 0; 
     }
 
-    void save(Resume r) {
-        if (r.uuid == null) {
+    public void save(Resume r) {
+        if (r.getUuid() == null) {
             System.out.println("Введите uuid");
         } else if (!checkUuid(r)) System.out.println("Резюме с таким uuid создано");
         else {
@@ -25,7 +28,7 @@ public class ArrayStorage {
     private boolean checkUuid(Resume r) {
         int compare = 0;
         while (compare < numberOfResume) {
-            if (storage[compare].uuid.equals(r.uuid)) {
+            if (storage[compare].getUuid().equals(r.getUuid())) {
                 return false;
             }
             compare++;
@@ -33,18 +36,18 @@ public class ArrayStorage {
         return true;
     }
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         for (int i = 0; i < numberOfResume; i++) {
-            if (storage[i].uuid.equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return storage[i];
             }
         }
         return null;
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         for (int i = 0; i < numberOfResume; i++) {
-            if (storage[i].uuid.equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 storage[i] = storage[numberOfResume - 1];
                 numberOfResume--;
                 break;
@@ -55,11 +58,11 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         return Arrays.copyOf(storage, numberOfResume);
     }
 
-    int size() {
+    public int size() {
         return numberOfResume;
     }
 }
