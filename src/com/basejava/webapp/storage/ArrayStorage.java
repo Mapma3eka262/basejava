@@ -19,6 +19,8 @@ public class ArrayStorage {
     public void save(Resume r) {
         if (r.getUuid() == null) {
             System.out.println("Введите uuid");
+        } else if (numberOfResume > 9999) {
+            System.out.println("Место в хранилище заполнено");
         } else if (checkUuid(r)) System.out.println("Резюме с таким uuid создано");
         else {
             storage[numberOfResume] = r;
@@ -28,11 +30,10 @@ public class ArrayStorage {
 
     public void update(Resume r) {
         if (r.getUuid() == null) {
-            System.out.println("Резюме с таким uuid не создано");
+            System.out.println("Введите uuid");
         } else if (checkUuid(r)) System.out.println("Резюме обновлено");
         else {
-            storage[numberOfResume] = r;
-            numberOfResume++;
+            System.out.println("Резюме с таким uuid не создано");
         }
     }
 
@@ -48,6 +49,7 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
+        //Надо сделать проверку на наличие
         for (int i = 0; i < numberOfResume; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return storage[i];
@@ -57,6 +59,7 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
+        //Надо сделать проверку на наличие перед удалением
         for (int i = 0; i < numberOfResume; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 storage[i] = storage[numberOfResume - 1];
