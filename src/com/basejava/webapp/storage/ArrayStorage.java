@@ -21,38 +21,39 @@ public class ArrayStorage {
             System.out.println("Введите uuid");
         } else if (numberOfResume >= storage.length) {
             System.out.println("Место в хранилище заполнено");
-        } else if (checkResume(r)) System.out.println("Резюме с uuid " + r + " создано");
-        else {
+        } else if (findIndex(r.getUuid()) < 0) {
             storage[numberOfResume] = r;
             numberOfResume++;
-        }
+        } else System.out.println("Резюме с uuid " + r + " создано");
     }
 
     public void update(Resume r) {
+        int indexOfResume = findIndex(r.getUuid());
         if (r.getUuid() == null) {
             System.out.println("Введите uuid");
-        } else if (checkResume(r)) System.out.println("Резюме с uuid" + r + " обновлено");
-        else {
+        } else if (indexOfResume > 0) {
+            storage[indexOfResume] = r;
+            System.out.println("Резюме с uuid " + r + " обновлено");
+        } else {
             System.out.println("Резюме с uuid " + r + "не создано");
         }
     }
 
     public Resume get(String uuid) {
-        if (checkUuid(uuid) > numberOfResume)
-        {
+        if (findIndex(uuid) > numberOfResume) {
             System.out.println("Резюме с именем " + uuid + " не существует");
             return null;
         } else {
-            return storage[checkUuid(uuid)];
+            return storage[findIndex(uuid)];
         }
     }
 
     public void delete(String uuid) {
-        if (checkUuid(uuid) > numberOfResume)
-        {
+        int removedIndex = findIndex(uuid);
+        if (removedIndex < 0) {
             System.out.println("Резюме с именем " + uuid + " не существует");
         } else {
-            storage[checkUuid(uuid)] = storage[numberOfResume - 1];
+            storage[removedIndex] = storage[numberOfResume - 1];
             numberOfResume--;
         }
     }
@@ -68,25 +69,13 @@ public class ArrayStorage {
         return numberOfResume;
     }
 
-    private boolean checkResume(Resume r) {
-        int compare = 0;
-        while (compare < numberOfResume) {
-            if (storage[compare].getUuid().equals(r.getUuid())) {
-                return true;
+    private int findIndex(String uuid) {
+        for (int i = 0; i < numberOfResume; i++)
+        {
+            if (storage[i].getUuid().equals(uuid)) {
+                return i;
             }
-            compare++;
         }
-        return false;
-    }
-
-    private int checkUuid(String uuid) {
-        int compare = 0;
-        while (compare < numberOfResume) {
-            if (storage[compare].getUuid().equals(uuid)) {
-                return compare;
-            }
-            compare++;
-        }
-        return 10000;
+        return -1;
     }
 }
