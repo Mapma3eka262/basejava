@@ -19,9 +19,9 @@ public class ArrayStorage {
     public void save(Resume r) {
         if (r.getUuid() == null) {
             System.out.println("Введите uuid");
-        } else if (numberOfResume > 9999) {
+        } else if (numberOfResume >= storage.length) {
             System.out.println("Место в хранилище заполнено");
-        } else if (checkUuid(r)) System.out.println("Резюме с таким uuid создано");
+        } else if (checkResume(r)) System.out.println("Резюме с uuid " + r + " создано");
         else {
             storage[numberOfResume] = r;
             numberOfResume++;
@@ -31,42 +31,29 @@ public class ArrayStorage {
     public void update(Resume r) {
         if (r.getUuid() == null) {
             System.out.println("Введите uuid");
-        } else if (checkUuid(r)) System.out.println("Резюме обновлено");
+        } else if (checkResume(r)) System.out.println("Резюме с uuid" + r + " обновлено");
         else {
-            System.out.println("Резюме с таким uuid не создано");
+            System.out.println("Резюме с uuid " + r + "не создано");
         }
-    }
-
-    private boolean checkUuid(Resume r) {
-        int compare = 0;
-        while (compare < numberOfResume) {
-            if (storage[compare].getUuid().equals(r.getUuid())) {
-                return true;
-            }
-            compare++;
-        }
-        return false;
     }
 
     public Resume get(String uuid) {
-        //Надо сделать проверку на наличие
-        for (int i = 0; i < numberOfResume; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return storage[i];
-            }
+        if (checkUuid(uuid) > numberOfResume)
+        {
+            System.out.println("Резюме с именем " + uuid + " не существует");
+            return null;
+        } else {
+            return storage[checkUuid(uuid)];
         }
-        System.out.println("Резюме с таким именем не существует");
-        return null;
     }
 
     public void delete(String uuid) {
-        //Надо сделать проверку на наличие перед удалением
-        for (int i = 0; i < numberOfResume; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                storage[i] = storage[numberOfResume - 1];
-                numberOfResume--;
-                break;
-            } else System.out.println("Резюме с таким именем не существует");
+        if (checkUuid(uuid) > numberOfResume)
+        {
+            System.out.println("Резюме с именем " + uuid + " не существует");
+        } else {
+            storage[checkUuid(uuid)] = storage[numberOfResume - 1];
+            numberOfResume--;
         }
     }
 
@@ -79,5 +66,27 @@ public class ArrayStorage {
 
     public int size() {
         return numberOfResume;
+    }
+
+    private boolean checkResume(Resume r) {
+        int compare = 0;
+        while (compare < numberOfResume) {
+            if (storage[compare].getUuid().equals(r.getUuid())) {
+                return true;
+            }
+            compare++;
+        }
+        return false;
+    }
+
+    private int checkUuid(String uuid) {
+        int compare = 0;
+        while (compare < numberOfResume) {
+            if (storage[compare].getUuid().equals(uuid)) {
+                return compare;
+            }
+            compare++;
+        }
+        return 10000;
     }
 }
