@@ -17,13 +17,13 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void emptyIndex(int index) {
+    protected void deleteResumeFromArray(int index) {
         storage[index] = storage[numberOfResume - 1];
     }
 
     @Override
-    protected void addingIndex(int index, Resume r) {
-        storage[index] = storage[numberOfResume - 1];
+    protected void saveResumeToArray(int index, Resume r) {
+        storage[numberOfResume] = r;
     }
 
 
