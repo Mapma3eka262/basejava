@@ -17,6 +17,7 @@ public class MailReflection {
 
         Method method = r.getClass().getMethod("toString");
         System.out.println(method.invoke(r));
+        // TODO : invoke r.toString via reflection
         System.out.println(r);
     }
 }
