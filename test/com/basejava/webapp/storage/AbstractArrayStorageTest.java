@@ -26,7 +26,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void size() throws Exception {
-        Assert.assertEquals(3, storage.size());
+        AssertStorageSize(3);
     }
 
     @Test
@@ -47,22 +47,30 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void clear() throws Exception {
         storage.clear();
-        Assert.assertEquals(0, storage.size());
+        AssertStorageSize(0);
     }
 
     @Test
     public void save() throws Exception {
+
     }
 
     @Test
     public void update() throws Exception {
+
     }
 
     @Test
     public void delete() throws Exception {
+
     }
 
     @Test
     public void getAll() throws Exception {
+
+    }
+
+    public void AssertStorageSize(int size) {
+        Assert.assertEquals(size, storage.size());
     }
 }
