@@ -1,19 +1,8 @@
 package com.basejava.webapp.storage;
 
-import org.junit.Test;
-
-public class ArrayStorageTest {
-
-    @Test
-    public void findIndex() {
+public class ArrayStorageTest extends AbstractArrayStorageTest {
+    public ArrayStorageTest() {
+        super(new ArrayStorage());
     }
 
-    @Test
-    public void deleteResumeFromArray() {
-    }
-
-    @Test
-    public void saveResumeToArray() {
-
-    }
 }
