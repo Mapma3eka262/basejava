@@ -34,7 +34,6 @@ public abstract class AbstractArrayStorageTest {
 
     }
 
-
     @Test
     public void get() throws Exception {
 
