@@ -10,7 +10,7 @@ import org.junit.Test;
 
 
 public abstract class AbstractArrayStorageTest {
-    private Storage storage;
+    private final Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final Resume RESUME_1 = new Resume(UUID_1);
 
@@ -74,11 +74,11 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = StorageException.class)
     public void overflowSave() {
         try {
-            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT + 1; i++) {
+            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
-            Assert.fail();
+            Assert.fail("Массив заполнен раньше времени");
         }
         storage.save(new Resume());
     }
@@ -87,10 +87,10 @@ public abstract class AbstractArrayStorageTest {
     public void update() {
         Resume updateResume = new Resume(UUID_2);
         storage.update(updateResume);
-        Assert.assertTrue(updateResume == storage.get(UUID_2));
+        Assert.assertSame(updateResume, storage.get(UUID_2));
     }
 
-    @Test (expected = NotExistStorageException.class)
+    @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
         Resume updateResume = new Resume("dummy");
         storage.update(updateResume);
@@ -103,7 +103,7 @@ public abstract class AbstractArrayStorageTest {
         AssertStorageSize(2);
     }
 
-    @Test (expected = NotExistStorageException.class)
+    @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() {
         storage.delete("NotExist");
     }
@@ -111,7 +111,7 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void getAll() {
         Resume[] newStorage = storage.getAll();
-        Assert.assertTrue(newStorage.length == 3);
+        Assert.assertEquals(newStorage.length, 3);
         Assert.assertEquals(RESUME_1, newStorage[0]);
         Assert.assertEquals(RESUME_2, newStorage[1]);
         Assert.assertEquals(RESUME_3, newStorage[2]);
